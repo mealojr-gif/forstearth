@@ -23,7 +23,7 @@ class Config:
     SITE_LOGO_URL = "https://i.postimg.cc/Gm8TXGRG/IMG-0197.jpg"
 
     MAX_CONTENT_LENGTH = 12 * 1024 * 1024  # 12MB upload ceiling
-    UPLOAD_RATE_LIMIT = "5 per hour"
+    UPLOAD_RATE_LIMIT = "1 per 5 seconds"
 
     CAPTION_MAX_LEN = 200
     TITLE_MAX_LEN = 60
