@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block bodyclass %}page-home{% endblock %}
+
+{% block content %}
+<section class="globe-hero">
+  <div class="globe-stage" id="globeStage">
+    <canvas id="globeCanvas"></canvas>
+    <div class="globe-hint" id="globeHint">اسحب لتدوير الكرة — اضغط على أي نقطة لترى الصورة</div>
+    <div class="globe-loading" id="globeLoading">جارٍ تحميل الكرة الأرضية…</div>
+  </div>
+
+  <div class="hero-copy">
+    <h1>كل نقطة على هذه الكرة<br>صورة من مكان حقيقي.</h1>
+    <p>ناس من كل الدول ترفع صورة من مكانها، وتحط دبوسها على الخريطة. لا حسابات، لا متابعين — بس فضول وصورة.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-lg">أضف صورتك</a>
+      <a href="{{ url_for('random_photo') }}" class="btn btn-ghost btn-lg">صورة عشوائية</a>
+    </div>
+    <div class="hero-stats" id="heroStats">
+      <div><strong id="statPhotos">—</strong><span>صورة</span></div>
+      <div><strong id="statCountries">—</strong><span>دولة</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="wrap">
+    <ol class="steps">
+      <li>
+        <span class="step-no">1</span>
+        <h3>اختر صورة من مكانك</h3>
+        <p>منظر من الشارع، من بيتك، من رحلتك — أي شي يمثّل مكانك الحقيقي.</p>
+      </li>
+      <li>
+        <span class="step-no">2</span>
+        <h3>حدد الموقع على الكرة</h3>
+        <p>اضغط مكانك على الكرة، أو دور موقعك تلقائيًا، أو اكتب اسم مدينتك.</p>
+      </li>
+      <li>
+        <span class="step-no">3</span>
+        <h3>انشرها</h3>
+        <p>اكتب اسمك وعنوان قصير، وصورتك تظهر على الكرة لأي شخص حول العالم.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="latest-strip">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>أحدث الصور</h2>
+      <a href="{{ url_for('top_page') }}">كل الصور ←</a>
+    </div>
+    <div class="strip" id="latestStrip">
+      <p class="empty-note">جارٍ التحميل…</p>
+    </div>
+  </div>
+</section>
+
+<div class="photo-drawer" id="photoDrawer">
+  <div class="photo-drawer-inner">
+    <button class="drawer-close" id="drawerClose" aria-label="إغلاق">×</button>
+    <div class="drawer-media">
+      <img id="drawerImg" src="" alt="">
+    </div>
+    <div class="drawer-info">
+      <h3 id="drawerTitle"></h3>
+      <p id="drawerCaption"></p>
+      <div class="drawer-meta">
+        <span id="drawerPlace"></span>
+        <span id="drawerBy"></span>
+      </div>
+      <div class="drawer-actions">
+        <button class="btn btn-ghost" id="drawerLike">أعجبني <span id="drawerLikes">0</span></button>
+        <a class="btn btn-ghost" id="drawerOpen" href="#" target="_blank" rel="noopener">فتح الصورة ←</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="{{ url_for('static', filename='js/globe-core.js') }}"></script>
+<script src="{{ url_for('static', filename='js/globe.js') }}"></script>
+{% endblock %}

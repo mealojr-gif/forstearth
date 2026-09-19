@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}بحث — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="listing-page">
+  <div class="wrap">
+    <div class="listing-head">
+      <h1>نتائج البحث{% if q %}: {{ q }}{% endif %}</h1>
+      <p>{{ results|length }} نتيجة</p>
+    </div>
+
+    {% if results %}
+    <div class="photo-grid">
+      {% for p in results %}
+      <a class="grid-card" href="{{ url_for('photo_page', slug=p.slug) }}">
+        <img src="{{ p.image_url }}" alt="{{ p.title or '' }}" loading="lazy">
+        <div class="grid-card-meta">
+          <span>{{ p.title or (p.city or "") }}</span>
+          <span class="grid-card-likes">{{ p.likes }} إعجاب</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% elif q %}
+    <div class="empty-state">
+      <p>ما لقينا نتائج لـ "{{ q }}".</p>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>اكتب اسم دولة أو مدينة في مربع البحث.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

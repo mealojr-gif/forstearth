@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}{{ site_name }} — كرة أرضية من صور الناس{% endblock %}</title>
+<meta name="description" content="{% block description %}كل نقطة على الكرة صورة رفعها شخص حقيقي من مكانه. تصفح العالم صورة صورة، أو أضف صورتك أنت.{% endblock %}">
+<link rel="icon" href="{{ logo_url }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="{{ url_for('index') }}">
+      <img src="{{ logo_url }}" alt="{{ site_name }}" class="brand-mark">
+      <span class="brand-name">Forst Earth</span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="{{ url_for('index') }}">الكرة الأرضية</a>
+      <a href="{{ url_for('countries_list') }}">الدول</a>
+      <a href="{{ url_for('top_page') }}">الأكثر مشاهدة</a>
+      <a href="{{ url_for('about_page') }}">عن الموقع</a>
+    </nav>
+    <div class="header-actions">
+      <form class="nav-search" action="{{ url_for('search_page') }}" method="get">
+        <input type="text" name="q" placeholder="ابحث عن دولة أو مدينة" value="{{ request.args.get('q','') }}">
+      </form>
+      <a class="btn btn-primary" href="{{ url_for('upload_page') }}">أضف صورة</a>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <div class="footer-brand">
+      <img src="{{ logo_url }}" alt="{{ site_name }}">
+      <p>كرة أرضية واحدة، بناها آلاف الناس بصورة واحدة كل مرة.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <h4>الموقع</h4>
+        <a href="{{ url_for('index') }}">الرئيسية</a>
+        <a href="{{ url_for('upload_page') }}">إضافة صورة</a>
+        <a href="{{ url_for('top_page') }}">الأكثر مشاهدة</a>
+        <a href="{{ url_for('random_photo') }}">صورة عشوائية</a>
+      </div>
+      <div>
+        <h4>عن الموقع</h4>
+        <a href="{{ url_for('about_page') }}">القوانين والهدف</a>
+        <a href="{{ url_for('countries_list') }}">كل الدول</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© {{ current_year }} Forst Earth</span>
+  </div>
+</footer>
+
+<script>window.FORST_COUNTRY_NAMES = {{ country_names_json|safe }};</script>
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    var nav = document.getElementById('mainNav');
+    var open = nav.classList.toggle('open');
+    this.setAttribute('aria-expanded', open);
+  });
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

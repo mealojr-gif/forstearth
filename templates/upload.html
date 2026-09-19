@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}أضف صورتك — {{ site_name }}{% endblock %}
+{% block bodyclass %}page-upload{% endblock %}
+
+{% block content %}
+<section class="upload-page">
+  <div class="wrap upload-grid">
+
+    <form id="uploadForm" class="upload-form" novalidate>
+      <h1>أضف صورتك للكرة</h1>
+      <p class="lead">صورة واحدة، من مكانك، بدون حساب.</p>
+
+      <label class="field-label">الصورة</label>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" name="image" accept="image/png,image/jpeg,image/webp" hidden>
+        <div class="dropzone-empty" id="dropzoneEmpty">
+          <span class="dz-icon">↑</span>
+          <p>اسحب الصورة هنا أو اضغط للاختيار</p>
+          <span class="dz-hint">PNG / JPG / WEBP — حتى 10 ميجا</span>
+        </div>
+        <img id="previewImg" class="dropzone-preview" hidden>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="titleInput">عنوان قصير</label>
+          <input type="text" id="titleInput" maxlength="60" placeholder="مثال: غروب في العلا">
+        </div>
+        <div class="field">
+          <label class="field-label" for="nameInput">اسمك</label>
+          <input type="text" id="nameInput" maxlength="40" placeholder="اسمك أو لقبك" required>
+        </div>
+      </div>
+
+      <label class="field-label" for="captionInput">وصف قصير (اختياري)</label>
+      <textarea id="captionInput" maxlength="200" rows="3" placeholder="اكتب شي عن هذي اللحظة أو المكان..."></textarea>
+      <div class="char-count"><span id="captionCount">0</span>/200</div>
+
+      <label class="field-label">موقعك</label>
+      <div class="location-row">
+        <select id="countrySelect">
+          <option value="">اختر الدولة</option>
+          {% for c in countries %}
+            {% if c[0] != "XX" %}
+            <option value="{{ c[0] }}" data-lat="{{ c[3] }}" data-lng="{{ c[4] }}">{{ c[1] }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <input type="text" id="cityInput" placeholder="المدينة (اختياري)" maxlength="100">
+        <button type="button" class="btn btn-ghost" id="useMyLocation">استخدم موقعي الحالي</button>
+      </div>
+
+      <div class="mini-globe-wrap">
+        <canvas id="pickerCanvas"></canvas>
+        <div class="picker-hint">اضغط على الكرة لتثبيت الدبوس بدقة</div>
+      </div>
+      <div class="coords-row">
+        <span id="coordsDisplay">لم يُحدَّد الموقع بعد</span>
+      </div>
+
+      <div class="rules-note">
+        بنشر صورتك أنت موافق على <a href="{{ url_for('about_page') }}">قوانين النشر</a>: بدون صور أشخاص بدون إذن، وبدون محتوى ضار.
+      </div>
+
+      <div id="formError" class="form-error" hidden></div>
+
+      <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">انشر على الكرة</button>
+    </form>
+
+    <div class="upload-success" id="uploadSuccess" hidden>
+      <h2>تم النشر</h2>
+      <p>صورتك الحين على الكرة الأرضية.</p>
+      <a class="btn btn-primary" id="successLink" href="#">شوف صورتك</a>
+      <a class="btn btn-ghost" href="{{ url_for('index') }}">رجوع للكرة</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="{{ url_for('static', filename='js/globe-core.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

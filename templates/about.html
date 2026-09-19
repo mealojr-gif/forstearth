@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}عن الموقع — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="about-page">
+  <div class="wrap about-grid">
+    <div>
+      <h1>عن Forst Earth</h1>
+      <p class="lead">كرة أرضية واحدة، كل نقطة عليها صورة رفعها شخص حقيقي من مكانه. بدون خوارزمية تختار لك، وبدون حساب يلزمك تسجّل فيه.</p>
+
+      <h2>ليش سويناه</h2>
+      <p>خرائط الأقمار الصناعية توريك المكان من فوق. Forst Earth يوريك المكان من عين شخص واقف فيه. الفكرة بسيطة: كل واحد يضيف صورة وحدة من مكانه، والكرة تكبر شوي شوي بصور الكل.</p>
+
+      <h2>القوانين</h2>
+      <div class="rules-cols">
+        <div class="rule-col rule-no">
+          <h3>ممنوع</h3>
+          <ul>
+            <li>صور أشخاص واضحين بدون إذنهم</li>
+            <li>محتوى ضار أو مسيء</li>
+            <li>سبام أو إعلانات</li>
+            <li>معلومات كاذبة عن الموقع</li>
+          </ul>
+        </div>
+        <div class="rule-col rule-yes">
+          <h3>مسموح</h3>
+          <ul>
+            <li>مناظر طبيعية</li>
+            <li>شوارع وبيوت من الخارج</li>
+            <li>أكل محلي</li>
+            <li>حيوانات وطبيعة</li>
+          </ul>
+        </div>
+      </div>
+      <p class="small-note">أي صورة تنكشف بلاغات كثيرة تنخفي تلقائيًا لحين المراجعة.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

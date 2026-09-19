@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ photo.title or 'صورة' }} — {{ site_name }}{% endblock %}
+{% block description %}{{ photo.caption or (photo.title or 'صورة من ' ~ (country[1] if country else '')) }}{% endblock %}
+
+{% block head %}
+<meta property="og:title" content="{{ photo.title or site_name }}">
+<meta property="og:description" content="{{ photo.caption or 'صورة على Forst Earth' }}">
+<meta property="og:image" content="{{ photo.image_url }}">
+<meta property="og:type" content="article">
+{% endblock %}
+
+{% block content %}
+<section class="photo-page">
+  <div class="wrap photo-page-grid">
+    <div class="photo-page-media">
+      <img src="{{ photo.image_url }}" alt="{{ photo.title or 'صورة' }}">
+    </div>
+    <div class="photo-page-info">
+      {% if country %}
+      <a class="place-tag" href="{{ url_for('country_page', code=country[0]) }}">{{ country[1] }}{% if photo.city %} · {{ photo.city }}{% endif %}</a>
+      {% endif %}
+      <h1>{{ photo.title or "بدون عنوان" }}</h1>
+      {% if photo.caption %}<p class="caption">{{ photo.caption }}</p>{% endif %}
+
+      <div class="uploader-line">رفعها <strong>{{ photo.uploader_name or "زائر" }}</strong> · {{ photo.created_at.strftime('%Y-%m-%d') }}</div>
+
+      <div class="photo-actions">
+        <button class="btn btn-primary" id="likeBtn" data-id="{{ photo.id }}">أعجبني <span id="likeCount">{{ photo.likes }}</span></button>
+        <button class="btn btn-ghost" id="reportBtn" data-id="{{ photo.id }}">إبلاغ</button>
+      </div>
+
+      <div class="share-row">
+        <span>مشاركة:</span>
+        <a href="https://wa.me/?text={{ request.url|urlencode }}" target="_blank" rel="noopener">واتساب</a>
+        <a href="https://twitter.com/intent/tweet?url={{ request.url|urlencode }}" target="_blank" rel="noopener">تويتر / X</a>
+        <button id="copyLinkBtn" type="button">نسخ الرابط</button>
+      </div>
+
+      <div class="view-count">{{ photo.views }} مشاهدة</div>
+
+      <a class="btn btn-ghost btn-block" href="{{ url_for('random_photo') }}">صورة عشوائية أخرى ←</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/photo.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}الأكثر مشاهدة — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="listing-page">
+  <div class="wrap">
+    <div class="listing-head">
+      <h1>الأكثر مشاهدة</h1>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <a href="{{ url_for('top_page', period='all', sort=sort) }}" class="{{ 'active' if period=='all' }}">كل الوقت</a>
+        <a href="{{ url_for('top_page', period='month', sort=sort) }}" class="{{ 'active' if period=='month' }}">هذا الشهر</a>
+        <a href="{{ url_for('top_page', period='week', sort=sort) }}" class="{{ 'active' if period=='week' }}">هذا الأسبوع</a>
+      </div>
+      <div class="filter-group">
+        <a href="{{ url_for('top_page', period=period, sort='views') }}" class="{{ 'active' if sort=='views' }}">الأكثر مشاهدة</a>
+        <a href="{{ url_for('top_page', period=period, sort='likes') }}" class="{{ 'active' if sort=='likes' }}">الأكثر إعجاباً</a>
+        <a href="{{ url_for('top_page', period=period, sort='new') }}" class="{{ 'active' if sort=='new' }}">الأحدث</a>
+      </div>
+    </div>
+
+    {% if photos %}
+    <div class="photo-grid">
+      {% for p in photos %}
+      <a class="grid-card" href="{{ url_for('photo_page', slug=p.slug) }}">
+        <img src="{{ p.image_url }}" alt="{{ p.title or '' }}" loading="lazy">
+        <div class="grid-card-meta">
+          <span>{{ p.title or "بدون عنوان" }}</span>
+          <span class="grid-card-likes">{{ p.views }} مشاهدة</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>لا صور بعد لهذه الفترة.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}كل الدول — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="listing-page">
+  <div class="wrap">
+    <div class="listing-head">
+      <h1>الدول</h1>
+      <p>تصفح الصور حسب الدولة</p>
+    </div>
+    <div class="country-grid">
+      {% for r in rows %}
+      <a class="country-card" href="{{ url_for('country_page', code=r.code) }}">
+        <span class="country-name">{{ r.name_ar }}</span>
+        <span class="country-count">{{ r.count }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

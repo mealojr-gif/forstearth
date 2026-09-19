@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}صور {{ country[1] }} — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="listing-page">
+  <div class="wrap">
+    <div class="listing-head">
+      <h1>صور من {{ country[1] }}</h1>
+      <p>{{ photos|length }} صورة</p>
+    </div>
+
+    {% if photos %}
+    <div class="photo-grid">
+      {% for p in photos %}
+      <a class="grid-card" href="{{ url_for('photo_page', slug=p.slug) }}">
+        <img src="{{ p.image_url }}" alt="{{ p.title or '' }}" loading="lazy">
+        <div class="grid-card-meta">
+          <span>{{ p.title or (p.city or country[1]) }}</span>
+          <span class="grid-card-likes">{{ p.likes }} إعجاب</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>لا توجد صور من {{ country[1] }} بعد.</p>
+      <a class="btn btn-primary" href="{{ url_for('upload_page') }}">كن أول من يضيف صورة</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

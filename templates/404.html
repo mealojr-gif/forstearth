@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}الصفحة غير موجودة — {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="error-page">
+  <div class="wrap">
+    <h1>404</h1>
+    <p>هذي النقطة مو موجودة على الكرة.</p>
+    <a class="btn btn-primary" href="{{ url_for('index') }}">رجوع للرئيسية</a>
+  </div>
+</section>
+{% endblock %}
